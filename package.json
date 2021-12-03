@@ -1,0 +1,22 @@
+{
+  "name": "youtubenode",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Wyatt726/YoutubeNode.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Wyatt726/YoutubeNode/issues"
+  },
+  "homepage": "https://github.com/Wyatt726/YoutubeNode#readme",
+  "dependencies": {
+    "mongoose": "^6.0.14"
+  }
+}
