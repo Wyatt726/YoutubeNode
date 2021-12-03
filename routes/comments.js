@@ -3,6 +3,14 @@ const express = require('express');
 const router = express.Router();
 
 //All endpoints and route handlers go here
+router.get('/', async (req,res) => {
+    try{
+        const comments = await Comment.find();
+        return res.send(comments);
+    }catch(ex){
+        return res.status(500).send(`InternalServerError:${ex}`);
+    }});
+
 router.post('/', async (req,res) =>{
     try{
         const { error } = validate(req.body);

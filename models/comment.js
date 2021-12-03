@@ -14,7 +14,6 @@ const commentSchema = new mongoose.Schema({
 
 })
 
-
 const Comment = mongoose.model('Comment', commentSchema)
 const Reply = mongoose.model('Reply', replySchema)
 

@@ -8,7 +8,7 @@ connectDB();
 app.use(express.json());
 app.use('/api/comments', comments);
 
-const port=process.env.PORT || 5000;
+const port = process.env.PORT || 5000;
 app.listen(port,()=>{
     console.log(`Serverstartedonport:${port}`);
 });
