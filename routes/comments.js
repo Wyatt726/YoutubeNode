@@ -1,4 +1,4 @@
-const {Comment, validate} = require('../models/comment');
+const {Comment, validate, Reply} = require('../models/comment');
 const express = require('express');
 const router = express.Router();
 
@@ -48,7 +48,7 @@ router.put('/:id', async (req, res) => {
         );
 
         if (!comment)
-            return res.status(400).send('The comment with id "${req.params.id}" does not exist.');
+            return res.status(400).send(`The comment with id "${req.params.id}" does not exist.`);
 
             await comment.save();
 
@@ -63,12 +63,43 @@ router.delete('/:id', async (req, res) => {
         const comment = await Comment.findByIdAndRemove(req.params.id);
 
         if(!comment)
-            return res.status(400).send('The comment with id "${req.params.id}" does not exist.');
+            return res.status(400).send(`The comment with id "${req.params.id}" does not exist.`);
 
             return res.send(comment);
     }catch (ex) {
-        return res.status(500).send('Internal Server Error: ${ex}');
+        return res.status(500).send(`Internal Server Error: ${ex}`);
     }
 });
+
+router.post('/reply', async (req,res) =>{
+    try{
+        const comment = await Comment.findById(req.body.commentID);
+        if(!comment)
+        return res.status(400).send(`The comment with id "${req.body.commentID}" does not exist.`);
+
+        const reply = new Reply({
+            replyBody: req.body.replyBody,
+        });
+        comment.replies.push(reply);
+        await comment.save()
+
+        return res.send(comment);
+    }catch(ex){   
+        return res.status(500).send(`InternalServerError:${ex}`);
+    }});
+
+    router.patch('/:id', async (req, res) => {
+        try{    
+            const comment = await Comment.findByIdAndUpdate(
+                req.params.id, req.body, {new:true}
+            );
+            if (!comment)
+                return res.status(400).send(`The comment with id "${req.params.id}" does not exist.`);
+         
+            return res.send(comment);        
+        }catch (ex){
+            return res.status(500).send(`Internal Server Error: ${ex}`);
+        }
+    });
 
 module.exports = router;

@@ -10,7 +10,7 @@ const commentSchema = new mongoose.Schema({
     commentBody: {type: String, required: true},
     likes: {type: Number, default: 0},
     dislikes: {type: Number, default: 0},
-    replies: [replySchema]
+    replies: {type: [replySchema], default: [] },
 
 })
 
