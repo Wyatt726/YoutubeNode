@@ -31,4 +31,44 @@ router.post('/', async (req,res) =>{
         return res.status(500).send(`InternalServerError:${ex}`);
     }});
 
+router.put('/:id', async (req, res) => {
+    try{
+        const {error} = validate(req.body);
+        if (error) return res.status(400).send(error);
+
+        const comment = await Comment.findByIdAndUpdate(
+            req.params.id,
+            {
+                videoID: req.body.videoID,
+                commentBody: req.body.commentBody,
+                likes: req.body.likes,
+                dislikes: req.body.dislikes,
+            },
+            { new: true}
+        );
+
+        if (!comment)
+            return res.status(400).send('The comment with id "${req.params.id}" does not exist.');
+
+            await comment.save();
+
+            return res.send(comment);        
+    }catch (ex){
+        return res.status(500).send('Internal Server Error: ${ex}');
+    }
+});
+
+router.delete('/:id', async (req, res) => {
+    try{
+        const comment = await Comment.findByIdAndRemove(req.params.id);
+
+        if(!comment)
+            return res.status(400).send('The comment with id "${req.params.id}" does not exist.');
+
+            return res.send(comment);
+    }catch (ex) {
+        return res.status(500).send('Internal Server Error: ${ex}');
+    }
+});
+
 module.exports = router;
