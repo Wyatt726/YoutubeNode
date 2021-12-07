@@ -2,7 +2,7 @@
   "name": "youtubenode",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "nodemon index.js",
   "scripts": {
     "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -19,8 +19,10 @@
   "homepage": "https://github.com/Wyatt726/YoutubeNode#readme",
   "dependencies": {
     "config": "^3.3.6",
+    "cors": "^2.8.5",
     "express": "^4.17.1",
     "joi": "^17.5.0",
-    "mongoose": "^6.0.14"
+    "mongoose": "^6.0.14",
+    "nodemon": "^2.0.15"
   }
 }
