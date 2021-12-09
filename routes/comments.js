@@ -11,6 +11,14 @@ router.get('/', async (req,res) => {
         return res.status(500).send(`InternalServerError:${ex}`);
     }});
 
+router.get('/:videoID', async (req,res) => {
+    try{
+        const comments = await Comment.find({videoID: req.params.videoID});
+        return res.send(comments);
+    }catch(ex){
+        return res.status(500).send(`InternalServerError:${ex}`);
+    }});
+
 router.post('/', async (req,res) =>{
     try{
         const { error } = validate(req.body);
@@ -33,9 +41,6 @@ router.post('/', async (req,res) =>{
 
 router.put('/:id', async (req, res) => {
     try{
-        const {error} = validate(req.body);
-        if (error) return res.status(400).send(error);
-
         const comment = await Comment.findByIdAndUpdate(
             req.params.id,
             {
@@ -47,8 +52,8 @@ router.put('/:id', async (req, res) => {
             { new: true}
         );
 
-        if (!comment)
-            return res.status(400).send(`The comment with id "${req.params.id}" does not exist.`);
+        // if (!comment)
+        //     return res.status(400).send(`The comment with id "${req.params.id}" does not exist.`);
 
             await comment.save();
 
